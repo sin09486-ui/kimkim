@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 스트레스 해소법</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:        #111111;
+    --bg2:       #1c1c1c;
+    --card:      #242424;
+    --border:    #2e2e2e;
+    --red:       #e63946;
+    --white:     #ffffff;
+    --gray:      #888888;
+    --font:      'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  /* ── 슬라이드 공통 ── */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 10%;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .slide:nth-child(even) { background: var(--bg2); }
+
+  /* ── 표지 (p1) ── */
+  .cover {
+    flex-direction: column;
+    text-align: center;
+    background: radial-gradient(ellipse at 70% 30%, #2a0a0a 0%, #111111 70%) !important;
+  }
+  .cover h1 {
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.2;
+  }
+  .cover h1 span { color: var(--red); }
+
+  /* ── 섹션 디바이더 ── */
+  .divider {
+    flex-direction: column;
+    text-align: center;
+  }
+  .divider-line {
+    width: 60px;
+    height: 4px;
+    background: var(--red);
+    margin: 0 auto 28px;
+    border-radius: 2px;
+  }
+  .divider h2 {
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+  }
+
+  /* ── 콘텐츠 레이아웃 ── */
+  .content { max-width: 1100px; width: 100%; }
+  .content-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .red-bar {
+    width: 6px;
+    height: 50px;
+    background: var(--red);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .content-header h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+  }
+
+  /* ── 표 ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  thead tr { background: #2d2d2d; }
+  th {
+    padding: 20px 28px;
+    text-align: left;
+    color: var(--red);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  td {
+    padding: 20px 28px;
+    border-top: 1px solid var(--border);
+    font-size: 1rem;
+  }
+  tr:hover td { background: rgba(230,57,70,.06); }
+
+  /* ── RANK 카드 ── */
+  .rank-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1100px;
+    width: 100%;
+  }
+  @media (max-width: 768px) { .rank-card { grid-template-columns: 1fr; } }
+
+  .rank-label {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .rank-title {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 24px;
+  }
+  .rank-title span { color: var(--red); }
+  .rank-desc { color: #cccccc; font-size: 1rem; line-height: 1.8; }
+
+  .rank-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 16px;
+    filter: brightness(.85);
+  }
+
+  /* ── 아이콘 리스트 ── */
+  .icon-list { list-style: none; display: flex; flex-direction: column; gap: 28px; max-width: 900px; width: 100%; }
+  .icon-list li { display: flex; align-items: flex-start; gap: 20px; }
+  .icon-wrap {
+    width: 48px;
+    height: 48px;
+    background: rgba(230,57,70,.15);
+    border: 1.5px solid rgba(230,57,70,.4);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .icon-list li strong { color: var(--red); }
+
+  /* ── 강조 카드 (p11) ── */
+  .highlight-card {
+    background: var(--card);
+    border: 2px solid var(--red);
+    border-radius: 20px;
+    padding: 60px 56px;
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+  }
+  .highlight-card .sub { font-size: 1.1rem; color: #bbbbbb; margin-bottom: 12px; }
+  .highlight-card .big-num {
+    font-size: clamp(4rem, 10vw, 7rem);
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .highlight-card .desc { font-size: 1.1rem; color: var(--white); font-weight: 600; }
+
+  /* ── 페이지 번호 ── */
+  .page-num {
+    position: absolute;
+    bottom: 24px;
+    right: 36px;
+    font-size: 0.8rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ▸ PAGE 1 : 표지 -->
+<section class="slide cover">
+  <h1>나의 <span>스트레스</span> 해소법</h1>
+  <span class="page-num">01</span>
+</section>
+
+<!-- ▸ PAGE 2 : 현대인의 스트레스 -->
+<section class="slide divider">
+  <div class="divider-line"></div>
+  <h2>현대인의 스트레스</h2>
+  <span class="page-num">02</span>
+</section>
+
+<!-- ▸ PAGE 3 : 주요 지표 표 -->
+<section class="slide">
+  <div class="content">
+    <div class="content-header">
+      <div class="red-bar"></div>
+      <h2>2025–2026 스트레스 주요 지표</h2>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>항목</th>
+          <th>비율 / 데이터</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>스트레스 인지율</td><td>전국 성인 평균</td><td>약 24.2% (서울 26.3%)</td></tr>
+        <tr><td>주요 원인 1위</td><td>경제적 어려움</td><td>36.6%</td></tr>
+        <tr><td>주요 원인 2위</td><td>대인관계 갈등</td><td>27.6%</td></tr>
+        <tr><td>선호 해소법 1위</td><td>수면 및 휴식</td><td>28.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="page-num">03</span>
+</section>
+
+<!-- ▸ PAGE 4 : 나만의 3단계 생존 전략 -->
+<section class="slide divider">
+  <div class="divider-line"></div>
+  <h2>나만의 3단계 생존 전략</h2>
+  <span class="page-num">04</span>
+</section>
+
+<!-- ▸ PAGE 5 : RANK 3 술 -->
+<section class="slide">
+  <div class="rank-card">
+    <div>
+      <p class="rank-label">RANK 3</p>
+      <h2 class="rank-title">술 한 잔의 <span>위로</span></h2>
+      <p class="rank-desc">
+        하루의 끝에서 마시는 시원한 맥주 한 잔은 뇌를 일시적으로 마취시켜 줍니다.
+        당장 해결할 수 없는 고민들을 잠시 잊게 만드는 가장 빠른 '비상약'입니다.
+      </p>
+    </div>
+    <div style="background:#1a0a0a;border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:5rem;">🍺</div>
+  </div>
+  <span class="page-num">05</span>
+</section>
+
+<!-- ▸ PAGE 6 : 알코올의 짧고 강렬한 휴식 -->
+<section class="slide">
+  <div class="content">
+    <div class="content-header">
+      <div class="red-bar"></div>
+      <h2>알코올의 짧고 강렬한 휴식</h2>
+    </div>
+    <ul class="icon-list">
+      <li>
+        <div class="icon-wrap">🍷</div>
+        <p><strong>즉각적인 기분 전환:</strong> 도파민 분비를 통해 일시적인 즐거움을 제공합니다.</p>
+      </li>
+      <li>
+        <div class="icon-wrap">💬</div>
+        <p><strong>감정의 분출:</strong> 억눌렸던 솔직한 감정을 털어낼 수 있는 매개체가 됩니다.</p>
+      </li>
+      <li>
+        <div class="icon-wrap">⚠️</div>
+        <p><strong>주의사항:</strong> 다음 날의 숙취는 새로운 스트레스가 될 수 있습니다.</p>
+      </li>
+    </ul>
+  </div>
+  <span class="page-num">06</span>
+</section>
+
+<!-- ▸ PAGE 7 : RANK 2 잠자기 -->
+<section class="slide divider">
+  <div class="divider-line"></div>
+  <h2>RANK 2. 잠자기</h2>
+  <span class="page-num">07</span>
+</section>
+
+<!-- ▸ PAGE 8 : 내일을 위한 리부트 -->
+<section class="slide">
+  <div class="rank-card">
+    <div>
+      <div class="content-header" style="margin-bottom:24px;">
+        <div class="red-bar"></div>
+        <h2 class="rank-title" style="font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:0;">내일을 위한 <span style="color:var(--red)">리부트</span></h2>
+      </div>
+      <p class="rank-desc" style="margin-bottom:16px;">컴퓨터가 버벅대면 껐다 켜는 것이 정답입니다.</p>
+      <p class="rank-desc">잠은 뇌를 청소하는 과정입니다. 복잡한 고민으로 머리가 터질 것 같을 때, 이불 속으로 숨어버리는 것은 가장 현명한 회피이자 충전입니다.</p>
+    </div>
+    <div style="background:#0a0a0a;border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:5rem;">🛌</div>
+  </div>
+  <span class="page-num">08</span>
+</section>
+
+<!-- ▸ PAGE 9 : 수면이 스트레스를 지우는 과학 -->
+<section class="slide">
+  <div class="content">
+    <div class="content-header">
+      <div class="red-bar"></div>
+      <h2>수면이 스트레스를 지우는 과학</h2>
+    </div>
+    <ul class="icon-list">
+      <li>
+        <div class="icon-wrap">🌙</div>
+        <p><strong>뇌 세척 효과:</strong> 수면 중 뇌척수액이 뇌 속 노폐물을 씻어냅니다.</p>
+      </li>
+      <li>
+        <div class="icon-wrap">🛡️</div>
+        <p><strong>감정 조절:</strong> 부정적인 감정을 무디게 만들어 객관적으로 보게 합니다.</p>
+      </li>
+      <li>
+        <div class="icon-wrap">⚡</div>
+        <p><strong>에너지 복구:</strong> 스트레스와 싸울 수 있는 정신적 에너지를 회복합니다.</p>
+      </li>
+    </ul>
+  </div>
+  <span class="page-num">09</span>
+</section>
+
+<!-- ▸ PAGE 10 : RANK 1 시간 (망각 → 시간으로 변경) -->
+<section class="slide divider">
+  <div class="divider-line"></div>
+  <h2>RANK 1. 시간</h2>
+  <span class="page-num">10</span>
+</section>
+
+<!-- ▸ PAGE 11 : 내 머릿속의 지우개 -->
+<section class="slide" style="justify-content:center;">
+  <div class="highlight-card">
+    <p class="sub">내 머릿속의 지우개</p>
+    <div class="big-num">100%</div>
+    <p class="desc">결국 시간은 모든 것을 지웁니다.</p>
+  </div>
+  <span class="page-num">11</span>
+</section>
+
+</body>
+</html>
